@@ -1,6 +1,6 @@
 # Real-time Data Visualization with OpenSearch and Amazon DynamoDB: A Zero-ETL Pipeline
 
-[Amazon OpenSearch](https://docs.aws.amazon.com/es_es/opensearch-service/latest/developerguide/what-is.html) Service and Amazon DynamoDB provide a powerful combination for real-time data visualization without the need for complex Extract, Transform, Load (ETL) processes. This blog post introduces an AWS Cloud Development Kit (CDK) stack that deploys a serverless architecture for efficient, real-time data ingestion using the [OpenSearch Ingestion](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ingestion.html) service (OSIS).
+[Amazon OpenSearch](https://docs.aws.amazon.com/es_es/opensearch-service/latest/developerguide/what-is.html) Service and Amazon DynamoDB provide a powerful combination for real-time data visualization without the need for complex Extract, Transform, Load (ETL) processes. This repositorie introduces an AWS Cloud Development Kit (CDK) stack that deploys a serverless architecture for efficient, real-time data ingestion using the [OpenSearch Ingestion](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ingestion.html) service (OSIS).
 
 By leveraging OSIS, you can process and transform data from DynamoDB streams directly into OpenSearch, enabling near-instant visualization and analysis. This zero-ETL pipeline eliminates the overhead of traditional data transformation workflows, allowing you to focus on deriving insights from your data.
 
@@ -12,7 +12,7 @@ The CDK stack provisions key components such as Amazon Cognito for authenticatio
 - [AWS Account](https://aws.amazon.com/resources/create-account/?sc_channel=el&sc_campaign=datamlwave&sc_content=cicdcfnaws&sc_geo=mult&sc_country=mult&sc_outcome=acq) 
 -  [Foundational knowledge of Python](https://catalog.us-east-1.prod.workshops.aws/workshops/3d705026-9edc-40e8-b353-bdabb116c89c/)
 
-💰 **Cost to complete**: 
+## 💰 Cost to complete: 
 - [Amazon DynamoDB Pricing](https://aws.amazon.com/dynamodb/pricing/)
 - [Amazon OpenSearch Service Pricing](https://aws.amazon.com/opensearch-service/pricing/)
 - [Amazon Cognito Pricing](https://aws.amazon.com/cognito/pricing/)
@@ -136,16 +136,26 @@ cdk synth
 cdk deploy
 ```
 
+The deployment will take between 5 and 10 minutes, which is how long it takes for the OpenSearch domain to be created.
+
+When it is ready you will see that the status changes to completed:
+
+![Authentication](imagen/domain_done.jpg)
+
+To access the OpenSearch Dashboards through the [OpenSearch Dashboards URL (IPv4)](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/dashboards.html) you need to [create a user in the Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/managing-users.html?icmpid=docs_cognito_console_help_panel).
+
+![Authentication](imagen/domain_information.jpg)
+
+With the created user, access the Dashboard and begin to experience the magic of Zero-ETL between the DynamoDB table and OpenSearch.
+
+In this repository you created a table to which you can inject data, but you can also change it by [Updating Amazon OpenSearch Ingestion pipelines](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/update-pipeline.html) making a change to the YAML file or modifying the [CDK stack](https://github.com/build-on-aws/realtime-dynamodb-zero-etl-opensearch-visualization/blob/main/dashboard/dashboard/dashboard_stack.py), if it is the case that you have a table with existing data these will be index the Index you create and you can view it together with the new ones that enter.
 
 ## Conclusion
 
-In this post, we explored how the combination of Amazon OpenSearch and Amazon DynamoDB enables real-time data visualization without the complexities of traditional ETL processes. By leveraging the OpenSearch Ingestion Service (OSIS) and the AWS CDK, you can easily deploy a serverless architecture that efficiently processes and transforms data from DynamoDB streams directly into OpenSearch.
+The combination of Amazon OpenSearch and Amazon DynamoDB enables real-time data visualization without the complexities of traditional ETL processes. By utilizing the OpenSearch Ingest Service (OSIS), a serverless architecture can be implemented that efficiently processes and transforms data from DynamoDB directly into OpenSearch. Building the application with AWS CDK streamlines and simplifies the setup of key components such as authentication, secure access, indexing, visualization, and data backup.
 
-The provided CDK stack simplifies the provisioning and configuration of key components, including Amazon Cognito for authentication, IAM roles for secure access, an OpenSearch domain for indexing and visualization, an S3 bucket for data backups, and a DynamoDB table as the data source. This comprehensive solution empowers you to focus on deriving insights from your data rather than managing the underlying infrastructure.
+This solution allows users to focus on gaining insights from their data rather than managing infrastructure. Ideal for real-time dashboards, log analytics, or IoT event monitoring, this Zero-ETL pipeline offers a scalable and agile approach to data ingestion and visualization. It is recommended to clone the repository, customize the configuration, and deploy the stack on AWS to leverage the power of OpenSearch and DynamoDB for real-time data visualization.
 
-Whether you're building real-time dashboards, analyzing log data, or monitoring IoT events, this zero-ETL pipeline offers a scalable and agile approach to data ingestion and visualization. By eliminating the need for complex data transformation workflows, you can achieve near-instant access to your data and make informed decisions based on up-to-date information.
-
-We encourage you to clone the repository, customize the configuration to meet your specific requirements, and deploy the stack in your AWS account. Embrace the power of OpenSearch and DynamoDB to unlock real-time data visualization capabilities and gain valuable insights from your data.
 
 ## Security
 
