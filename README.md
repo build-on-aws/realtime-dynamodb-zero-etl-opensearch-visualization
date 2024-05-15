@@ -37,7 +37,7 @@ The main link of this pipeline configuration is a [YAML file format](https://git
 
 The pipeline configuration is done through a [YAML file format](https://github.com/build-on-aws/realtime-dynamodb-zero-etl-opensearch-visualization/blob/main/dashboard/dashboard/template.txt) like:
 
-```Json
+```json
 version: "2"
 dynamodb-pipeline:
   source:
