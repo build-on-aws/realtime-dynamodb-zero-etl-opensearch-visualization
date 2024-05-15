@@ -57,56 +57,50 @@ class DashboardStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
         REGION_NAME = self.region
         
-        from dashboard.cognito_utils import get_existing_cognito_resources
-        user_pool_id, identity_pool_id = get_existing_cognito_resources('CognitoUserPool', 'CognitoIdentityPool')
-
-        if user_pool_id is None or identity_pool_id is None:
-            # create a cognito pool for opensearch 
-            cognito_pool = cognito.UserPool(self, "CognitoUserPool",
-                                        sign_in_aliases=cognito.SignInAliases(
-                                            email=True,
-                                        ),
-                                        auto_verify=cognito.AutoVerifiedAttrs(
-                                            email=True
-                                        ),
-                                        standard_attributes=cognito.StandardAttributes(
-                                            email=cognito.StandardAttribute(mutable=True, required=True)
-                                        ), 
-                                        removal_policy=RemovalPolicy.DESTROY
-                                        )
-            
-            # create a user pool client for the cognito pool
-            cognito_pool_client = cognito_pool.add_client(
-                "CognitoUserPoolClient",
-                user_pool_client_name="CognitoUserPoolClient",
-                generate_secret=False,
-            )
-            # create a domain for the cognito pool
-            domain = cognito_pool.add_domain("Domain", 
-                        cognito_domain=cognito.CognitoDomainOptions(
-                            domain_prefix="zeroetldemo"
-                        )
+        # create a cognito pool for opensearch 
+        cognito_pool = cognito.UserPool(self, "CognitoUserPool",
+                                    sign_in_aliases=cognito.SignInAliases(
+                                        email=True,
+                                    ),
+                                    auto_verify=cognito.AutoVerifiedAttrs(
+                                        email=True
+                                    ),
+                                    standard_attributes=cognito.StandardAttributes(
+                                        email=cognito.StandardAttribute(mutable=True, required=True)
+                                    ), 
+                                    removal_policy=RemovalPolicy.DESTROY
+                                    )
+        
+        # create a user pool client for the cognito pool
+        cognito_pool_client = cognito_pool.add_client(
+            "CognitoUserPoolClient",
+            user_pool_client_name="CognitoUserPoolClient",
+            generate_secret=False,
+        )
+        # create a domain for the cognito pool
+        domain = cognito_pool.add_domain("Domain", 
+                    cognito_domain=cognito.CognitoDomainOptions(
+                        domain_prefix="zeroetldemo"
                     )
+                )
 
-            # create a identity pool for opensearch
-            cognito_identity_pool = cognito.CfnIdentityPool(self, "CognitoIdentityPool",
-                                                        allow_unauthenticated_identities=False,
-                                                        cognito_identity_providers=[
-                                                            cognito.CfnIdentityPool.CognitoIdentityProviderProperty(
-                                                                client_id=cognito_pool_client.user_pool_client_id,
-                                                                provider_name=cognito_pool.user_pool_provider_name
-                                                            )
-                                                        ]
+        # create a identity pool for opensearch
+        cognito_identity_pool = cognito.CfnIdentityPool(self, "CognitoIdentityPool",
+                                                    allow_unauthenticated_identities=False,
+                                                    cognito_identity_providers=[
+                                                        cognito.CfnIdentityPool.CognitoIdentityProviderProperty(
+                                                            client_id=cognito_pool_client.user_pool_client_id,
+                                                            provider_name=cognito_pool.user_pool_provider_name
                                                         )
-            
-            #Sets the deletion policy of the resource based on the removal policy DESTROY
-            cognito_identity_pool.apply_removal_policy(RemovalPolicy.DESTROY)
+                                                    ]
+                                                    )
+        
+        #Sets the deletion policy of the resource based on the removal policy DESTROY
+        cognito_identity_pool.apply_removal_policy(RemovalPolicy.DESTROY)
 
-            identity_pool_id = cognito_identity_pool.ref
-            user_pool_id = cognito_pool.user_pool_id
-        else:
-            cognito_pool = cognito.UserPool.from_user_pool_id(self, "CognitoUserPool", user_pool_id)
-            cognito_identity_pool = cognito.CfnIdentityPool.from_identity_pool_id(self, "CognitoIdentityPool", identity_pool_id)
+        identity_pool_id = cognito_identity_pool.ref
+
+        
 
         auth_role = iam.Role(self, "authRoleIdentity", 
             assumed_by = iam.FederatedPrincipal(

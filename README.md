@@ -148,7 +148,7 @@ To access the OpenSearch Dashboards through the [OpenSearch Dashboards URL (IPv4
 
 With the created user, access the Dashboard and begin to experience the magic of Zero-ETL between the DynamoDB table and OpenSearch.
 
-In this repository you created a table to which you can inject data, but you can also change it by [Updating Amazon OpenSearch Ingestion pipelines](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/update-pipeline.html) making a change to the YAML file or modifying the [CDK stack](https://github.com/build-on-aws/realtime-dynamodb-zero-etl-opensearch-visualization/blob/main/dashboard/dashboard/dashboard_stack.py), if it is the case that you have a table with existing data these will be index the Index you create and you can view it together with the new ones that enter.
+In this repository you created a table to which you can inject data, but you can also change it by [Updating Amazon OpenSearch Ingestion pipelines](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/update-pipeline.html) making a change to the YAML file or modifying the [CDK stack](https://github.com/build-on-aws/realtime-dynamodb-zero-etl-opensearch-visualization/blob/main/dashboard/dashboard/dashboard_stack.py).
 
 ## Conclusion
 
