@@ -101,9 +101,9 @@ cd dashboard
 
 - Configure the [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
 
-- Deploy architecture with CDK [Follow steps:](/private-assistant/README.md)
+- Deploy architecture with CDK [Follow steps:](https://github.com/build-on-aws/realtime-dynamodb-zero-etl-opensearch-visualization/blob/main/dashboard/README.md)
 
-✅ **Create The Virtual Environment**: by following the steps in the [README](/private-assistant/README.md)
+✅ **Create The Virtual Environment**: by following the steps in the [README](https://github.com/build-on-aws/realtime-dynamodb-zero-etl-opensearch-visualization/blob/main/dashboard/README.md)
 
 ```
 python3 -m venv .venv
