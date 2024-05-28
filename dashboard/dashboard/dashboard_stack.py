@@ -192,25 +192,19 @@ class DashboardStack(Stack):
           #vpc_id = "vpc-xxx"  # Reemplaza con el ID de tu VPC existente
           #vpc = ec2.Vpc.from_lookup(self, "ImportedVPC", vpc_id=vpc_id, region=REGION_NAME)
 
-        opensearch_domain = opensearch.Domain(self, "ZeroETLDashboardDemo",
+        opensearch_domain = opensearch.Domain(self, "ZeroETLDashboardDemoL",
                                    version=opensearch.EngineVersion.OPENSEARCH_1_3,
                                    capacity=opensearch.CapacityConfig(
-                                       data_nodes=3,
+                                       data_nodes=1,
                                        data_node_instance_type="r5.large.search",
-                                       master_nodes=3,
-                                       master_node_instance_type="r5.large.search"
+                                       multi_az_with_standby_enabled = False,
+                                       #master_nodes=1,
+                                       #master_node_instance_type="r5.large.search"
                                    ),
                                    ebs=opensearch.EbsOptions(
-                                       enabled=True,
-                                       volume_size=100, 
+                                       volume_size=10, 
                                        volume_type=ec2.EbsDeviceVolumeType.GP3
                                    ),
-                                   zone_awareness=opensearch.ZoneAwarenessConfig(
-                                       availability_zone_count=3
-                                   ),
-
-                                     #vpc=vpc,
-                                     #vpc_subnets=[ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE)],
                                    
                                    cognito_dashboards_auth=opensearch.CognitoOptions(
                                            user_pool_id= cognito_user_pool_id,
