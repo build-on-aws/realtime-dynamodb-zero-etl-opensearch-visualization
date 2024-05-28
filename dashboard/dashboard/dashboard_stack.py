@@ -113,6 +113,16 @@ class DashboardStack(Stack):
             )
         )
 
+        
+        cfn_identity_pool_role_attachment = cognito.CfnIdentityPoolRoleAttachment(
+                    self, "IdentityPoolRoleAttachment",
+                    identity_pool_id=cognito_identity_pool.ref,
+                    roles={
+                        "authenticated": auth_role.role_arn
+                    }
+            )
+
+
         # Crea una política de acceso
         auth_policy = iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
