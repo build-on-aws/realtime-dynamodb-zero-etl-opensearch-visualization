@@ -263,7 +263,7 @@ class DashboardStack(Stack):
         replace_value = {
                 "REGION_NAME": str(REGION_NAME),
                 "BUCKET_NAME": str(s3_backup_bucket.bucket_name),
-                "DYNAMODB_TABLE_ARN": str(dynamodb_table.table_arn),
+                "DYNAMODB_TABLE_ARN": str(dynamodb_table.table_arn), #modify this value with the ARN of your existing table
                 "STS_ROLE_ARN":str(sts_role.role_arn),
                 "OpenSearch_DOMAIN":str(opensearch_domain.domain_endpoint),
                 }
