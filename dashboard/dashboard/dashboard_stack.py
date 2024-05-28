@@ -226,7 +226,7 @@ class DashboardStack(Stack):
             self,
             "OpenSearchDynamoDBIngestionBackupS3Bucket",
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            bucket_name="opensearch-ddb-ingestion-backup-v2",
+            bucket_name=f"opensearch-ddb-ingestion-backup-{self.account}",
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
             versioned=True,
